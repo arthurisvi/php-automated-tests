@@ -4,8 +4,22 @@ require_once 'Pessoa.php';
 require_once 'ExportadorDePessoaEmXml.php';
 
 //Preparando cenário de teste
-$pessoa = new Pessoa('Arthur Isvi', new DateTimeImmutable('2001-09-01'));
-$exportador = new ExportadorDePessoaEmXml($pessoa);
+// dublê de teste
+$exportador = new ExportadorDePessoaEmXml(new class extends Pessoa
+{
+
+  public function __construct(){}
+
+  public function nome(): string
+  {
+    return 'Arthur Isvi';
+  }
+
+  public function idade(): int
+  {
+    return 21;
+  }
+});
 
 //Executa a ação a ser testada
 $xml = $exportador->exporta();
@@ -16,9 +30,8 @@ $xmlEsperado .= '<nome>Arthur Isvi</nome>';
 $xmlEsperado .= '<idade>21</idade>';
 $xmlEsperado .= '</pessoa>';
 
-if(str_contains($xml, $xmlEsperado)){
+if (str_contains($xml, $xmlEsperado)) {
   print('Teste passou');
-}else{
+} else {
   print('Teste falhou');
 }
-
