@@ -1,6 +1,6 @@
 <?php
 
-class ExportadorDePessoaEmXml{
+class ExportadorDePessoaEmXml {
 
   private Pessoa $pessoa;
 
